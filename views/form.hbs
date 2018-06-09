@@ -24,6 +24,15 @@
         <label for="addr">Enter address</label>
         <input id="addr" name="address" class="form-control" type="text" placeholder="Enter address ..."/>
         <p></p>
+        <label for="name">Enter name</label>
+        <input id="name" name="name" class="form-control" type="text" placeholder="Enter name ..."/>
+        <p></p>
+        <label for="places-type">Selecte type of place:</label>
+        <p></p>
+          <select>
+            {{> scrollablelist}}
+          </select>
+          <p></p>
         <input type="submit" value="Send" formaction="/getplaces"/>
       </div>
     </form>

@@ -32,10 +32,11 @@ server.post('/getplaces',(req, res) => {
     }
 
     const placesReq = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationData.lat},${locationData.lng}&radius=1500&types=food&name=food&key=${PLACES_API_KEY}`;
-    console.log(locationData);
-    res.status(200).send(locationData);
+    return axios.get(placesReq);
+  }).then((response) => {
+    res.status(200).send(response.data.results)
   }).catch((error) => {
-    console.log(error);
+      console.log(error);
   });
 
 });
