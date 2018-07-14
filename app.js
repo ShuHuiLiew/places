@@ -15,6 +15,13 @@ hbs.registerPartials(__dirname + '/views/partials');// tell hbs that you use par
 const PLACES_API_KEY = 'AIzaSyBd8V1Gvd5PDyO6gZoKIOnPvSmTwYwIfcM';
 var filteredResults;
 
+if (process.env.NODE_ENV === 'production') {
+  server.use(express.static('client/build'));
+  server.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 hbs.registerHelper('list', (items,options) => {
   items = filteredResults;
   var out = "<tr><th>Name</th><th>Address</th><th>Photo</th></tr>";
@@ -28,6 +35,7 @@ hbs.registerHelper('list', (items,options) => {
 });
 
 server.use(express.static(path.join(__dirname, 'public'))); // inside ' ' is the place holder
+
 
 server.get('/', (req, res) => {
   res.render('home.hbs');
@@ -61,7 +69,7 @@ server.post('/getplaces',(req, res) => {
     .then((result) => {
       res.status(200).send(result);
     })
-    .cathch((error) => {
+    .catch((error) => {
       res.status(400).send(error);
     });
 
